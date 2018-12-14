@@ -115,7 +115,7 @@ class EmotionTrainer:
 
     def Train(self):
         metascore = []
-        for i in range(0,1):
+        for i in range(0,10):
             print('Training run:')
             print(i)
             result = self.RunRecognizer()
@@ -133,12 +133,21 @@ class EmotionTrainer:
                 face = self.face_detect.detectMultiScale(frame_gray, 1.1, 5)
 
                 for (x, y, w, h) in face:
-                    cv2.rectangle(frame, (x,y), (x+w,y+h), (0,0,255), 2)
+                    try:
 
-                    frame_gray = frame_gray[y:y+h, x:x+w] 
-                    frame_out = cv2.resize(frame_gray, (350, 350))
-                    pred, conf = self.fisher_face_reco.predict(frame_out)
-                    print('prediction %s, confidence: %s' %(self.emotions[pred], conf))
+                        roi = frame_gray[y:y+h, x:x+w] 
+                        frame_out = cv2.resize(roi, (350, 350))
+                        pred, conf = self.fisher_face_reco.predict(frame_out)
+
+                        emotion = self.emotions[pred]
+
+                        cv2.rectangle(frame, (x, y), (x+w, y+25), (0, 255, 0), cv2.FILLED)
+                        cv2.putText(frame, emotion, (x+5, y+20), 0, 0.5, (0, 0, 0), 1)
+                        cv2.rectangle(frame, (x,y), (x+w,y+h), (0,255,0), 2)
+
+                        print('prediction %s, confidence: %s' %(emotion, conf))
+                    except Exception as e:
+                        print(str(e))
 
 
 
