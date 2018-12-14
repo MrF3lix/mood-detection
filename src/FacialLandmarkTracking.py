@@ -11,7 +11,7 @@ import numpy as np
 class FacialLandmarkTracking:
     def __init__(self):
         # You can use multiple cameras
-        self.cam = cv2.VideoCapture(1)
+        self.cam = cv2.VideoCapture(0)
         self.detector = dlib.get_frontal_face_detector()
         self.predictor = dlib.shape_predictor('targets/shape_predictor_68_face_landmarks.dat')
 
@@ -24,11 +24,9 @@ class FacialLandmarkTracking:
         _, frame = self.cam.read()
         landmarks = self.GetLandmarks(frame)
 
-
-        # TODO keep track of those landmarks and detect changes
-        # TODO evaluate emotions from landmarks on the face
-
         cv2.imshow('Webcam', frame)
+
+        return landmarks
 
     def GetLandmarks(self, frame):
         frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
