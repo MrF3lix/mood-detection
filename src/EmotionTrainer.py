@@ -163,4 +163,6 @@ class EmotionTrainer:
 
 
     def Stop(self):
-        print('stop')
+        print('Exit application')
+        self.cam.release()
+        cv2.destroyAllWindows()
