@@ -3,13 +3,13 @@ from shutil import copyfile
 import cv2
 
 class DatasetPrep:
-    def __init__(self, classList, landmarkDetector):
+    def __init__(self, classList):
         self.classList = classList
 
+    def Run(self):
         self.CleanDataset()
         self.CollectFaces()
 
-    # TODO move this to a different class
     def CleanDataset(self):
         participants = glob.glob('dataset/source_emotion/*', recursive=True)
         for x in participants:
@@ -34,7 +34,6 @@ class DatasetPrep:
                     print('copied')
         
 
-    # TODO move this to a different class
     def CollectFaces(self):
         face_detect = cv2.CascadeClassifier("haarcascades/haarcascade_frontalface_default.xml")
 
