@@ -1,19 +1,14 @@
 import sys
-from EmotionTrainer import EmotionTrainer
+from DatasetTrainer import DatasetTrainer
+from LandmarkDetector import LandmarkDetector
 
 class Trainer:
     def __init__(self):
-        try:
-            self.emotionTrainer = EmotionTrainer()
-            self.emotionTrainer.Train()
+        self.emotions = ["neutral", "anger", "disgust", "happy", "surprise"]
+        landmarkDetector = LandmarkDetector()
+        datasetTrainer = DatasetTrainer(self.emotions, landmarkDetector)
 
-            self.emotionTrainer.Predict()
-
-        except (KeyboardInterrupt, SystemExit):
-            self.Stop()
-
-    def Stop(self):
-        self.emotionTrainer.Stop()
+        datasetTrainer.Train()
 
 if __name__ == "__main__":
     Trainer()

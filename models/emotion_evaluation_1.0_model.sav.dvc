@@ -1,0 +1,5 @@
+md5: 14fe2bdc605e8c1fc1ab0febeeb6af5b
+outs:
+- cache: true
+  md5: 0aec1c54141fcb27a5e205fe748c44ef
+  path: emotion_evaluation_1.0_model.sav
