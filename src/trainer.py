@@ -5,6 +5,7 @@ from LandmarkDetector import LandmarkDetector
 class Trainer:
     def __init__(self):
         self.emotions = ["neutral", "anger", "disgust", "happy", "surprise"]
+        # self.emotions = ["neutral", "happy"]
         landmarkDetector = LandmarkDetector()
         datasetTrainer = DatasetTrainer(self.emotions, landmarkDetector)
 
@@ -12,3 +13,4 @@ class Trainer:
 
 if __name__ == "__main__":
     Trainer()
+    

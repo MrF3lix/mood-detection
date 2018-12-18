@@ -10,8 +10,11 @@ class LandmarkDetector:
         self.detector = dlib.get_frontal_face_detector()
         self.predictor = dlib.shape_predictor('targets/shape_predictor_68_face_landmarks.dat')
 
-    def GetLandmarks(self, image):
-        data = {}
+    def GetLandmarks(self, frame):
+        data = []
+        frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        image = self.clahe.apply(frame_gray)
+        
         detections = self.detector(image, 1)
 
         for k,d in enumerate(detections):
@@ -20,7 +23,7 @@ class LandmarkDetector:
             ylist = []
 
             for i in range(1,68):
-                cv2.circle(image, (shape.part(i).x,shape.part(i).y), 2, (0,0,255), -1)
+                # cv2.circle(frame, (shape.part(i).x,shape.part(i).y), 2, (0,0,255), -1)
                 xlist.append(float(shape.part(i).x))
                 ylist.append(float(shape.part(i).y))
 
@@ -39,8 +42,8 @@ class LandmarkDetector:
                 landmarks_vectorised.append(dist)
                 landmarks_vectorised.append((math.atan2(y, x)*360)/(2*math.pi))
 
-            data['landmarks_vectorised'] = landmarks_vectorised
+            data.append(landmarks_vectorised)
         if len(detections) < 1:
-            data['landmarks_vectorised'] = "error"
+            data = "error"
 
         return data

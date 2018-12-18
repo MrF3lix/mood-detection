@@ -1,16 +1,15 @@
 import sys
-from FacialLandmarkTracking import FacialLandmarkTracking
-from EmotionTrainer import EmotionTrainer
 from DatasetPredictor import DatasetPredictor
 from LandmarkDetector import LandmarkDetector
 
 class App:
     def __init__(self):
         try:
-            self.emotions = ["neutral", "anger", "disgust", "happy", "surprise"]
+            emotions = ["neutral", "anger", "disgust", "happy", "surprise"]
+            # emotions = ["neutral", "happy"]
             landmarkDetector = LandmarkDetector()
         
-            self.datasetPredictor = DatasetPredictor(self.emotions,'models/emotion_evaluation_1.0_model.sav',landmarkDetector)
+            self.datasetPredictor = DatasetPredictor(emotions,'models/emotion_evaluation_1.0_model.sav',landmarkDetector)
             self.datasetPredictor.Predict()
 
         except (KeyboardInterrupt, SystemExit):
