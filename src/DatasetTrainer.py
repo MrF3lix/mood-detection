@@ -6,6 +6,7 @@ import random
 import numpy as np
 import dlib
 from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
 import math
 import pickle
 
@@ -20,8 +21,10 @@ class DatasetTrainer:
         files = glob.glob("dataset/faces/%s/*" %emotion)
         random.shuffle(files)
 
-        training = files[:int(len(files)*0.8)]
-        prediction = files[-int(len(files)*0.2):]
+        data = train_test_split(files, test_size=0.33, random_state=42)
+
+        training = data[0]
+        prediction = data[1]
 
         return training, prediction
 
@@ -69,12 +72,12 @@ class DatasetTrainer:
 
     def Train(self):
         accur_lin = []
-        for i in range(0,1):
+        for i in range(0,10):
             print('Training run: %s' %(i))
             result = self.Run()
             accur_lin.append(result)
 
         print("Mean value lin svm: %s" %np.mean(accur_lin))
 
-        filename = 'models/emotion_evaluation_1.1_model.sav'
+        filename = 'models/emotion_evaluation_2.0_model.sav'
         pickle.dump(self.clf, open(filename, 'wb'))

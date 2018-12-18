@@ -16,7 +16,13 @@ class DatasetPredictor:
         try:
             while True:
                 _, frame = self.cam.read()
-                landmarks = self.landmarkDetector.GetLandmarks(frame)
+                frame = cv2.resize(frame, (960, 540)) 
+                # self.landmarkDetector.ShowLandmarks(frame)
+
+
+                test = cv2.resize(frame, (384, 216)) 
+                # TODO make sure the frame only takes the face and is 350 by 350 pixel
+                landmarks = self.landmarkDetector.GetLandmarks(test)
 
                 if landmarks != "error":
                     
