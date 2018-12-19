@@ -21,8 +21,8 @@ class LandmarkDetector:
 
     def GetLandmarks(self, frame):
         data = []
-        frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        image = self.clahe.apply(frame_gray)
+        # frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        image = self.clahe.apply(frame)
         
         detections = self.detector(image, 1)
 

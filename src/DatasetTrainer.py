@@ -39,7 +39,8 @@ class DatasetTrainer:
 
             for item in training:
                 image = cv2.imread(item)
-                landmarks = self.landmarkDetector.GetLandmarks(image)
+                image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                landmarks = self.landmarkDetector.GetLandmarks(image_gray)
                 if landmarks == "error":
                     print("failed to detect a face: %s" %(item))
                 else:
@@ -49,7 +50,8 @@ class DatasetTrainer:
 
             for item in prediction:
                 image = cv2.imread(item)
-                landmarks = self.landmarkDetector.GetLandmarks(image)
+                image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                landmarks = self.landmarkDetector.GetLandmarks(image_gray)
                 if landmarks == "error":
                     print("failed to detect a face: %s" %(item))
                 else:

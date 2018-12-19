@@ -13,28 +13,32 @@ class DatasetPredictor:
         self.clf = pickle.load(open(model, 'rb'))
 
     def Predict(self):
+        face_detect = cv2.CascadeClassifier("haarcascades/haarcascade_frontalface_default.xml")
+
         try:
             while True:
                 _, frame = self.cam.read()
-                frame = cv2.resize(frame, (960, 540)) 
-                # self.landmarkDetector.ShowLandmarks(frame)
+                # frame = cv2.resize(frame, (960, 540)) 
+                frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                face = face_detect.detectMultiScale(frame_gray, 1.1, 5)
 
+                for (x, y, w, h) in face:
+                    face = frame_gray[y:y+h, x:x+w] 
+                    face_resized = cv2.resize(face, (350,350))
+                    cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+                    landmarks = self.landmarkDetector.GetLandmarks(face_resized)
 
-                test = cv2.resize(frame, (384, 216)) 
-                # TODO make sure the frame only takes the face and is 350 by 350 pixel
-                landmarks = self.landmarkDetector.GetLandmarks(test)
+                    if landmarks != "error":
+                        
+                        prediction = self.clf.predict_proba(landmarks)
 
-                if landmarks != "error":
-                    
-                    prediction = self.clf.predict_proba(landmarks)
+                        print('--------\nPrediction')
+                        # print(prediction)
+                        for n in range(0, len(prediction)):
+                            for i in range(0,len(self.classList)):
 
-                    print('--------\nPrediction')
-                    print(prediction)
-                    for n in range(0, len(prediction)):
-                        for i in range(0,len(self.classList)):
-
-                            value = float(prediction[n][i] * 100)
-                            print('%s: %s' %(self.classList[i], round(value)))
+                                value = float(prediction[n][i] * 100)
+                                print('%s - %s: %s' %(i, self.classList[i], round(value)))
 
                 cv2.imshow('Webcam', frame)
 

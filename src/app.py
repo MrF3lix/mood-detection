@@ -9,7 +9,7 @@ class App:
             # emotions = ["neutral", "happy"]
             landmarkDetector = LandmarkDetector()
         
-            self.datasetPredictor = DatasetPredictor(emotions,'models/emotion_evaluation_1.2_model.sav',landmarkDetector)
+            self.datasetPredictor = DatasetPredictor(emotions,'models/emotion_evaluation_1.1_model.sav',landmarkDetector)
             self.datasetPredictor.Predict()
 
         except (KeyboardInterrupt, SystemExit):
