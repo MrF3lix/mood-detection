@@ -17,8 +17,10 @@ class DatasetPredictor:
 
         try:
             while True:
+
+                face_landmarks = []
+
                 _, frame = self.cam.read()
-                # frame = cv2.resize(frame, (960, 540)) 
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 face = face_detect.detectMultiScale(frame_gray, 1.1, 5)
 
@@ -29,16 +31,17 @@ class DatasetPredictor:
                     landmarks = self.landmarkDetector.GetLandmarks(face_resized)
 
                     if landmarks != "error":
+                        face_landmarks.append(landmarks)
+
                         
-                        prediction = self.clf.predict_proba(landmarks)
+                prediction = self.clf.predict_proba(face_landmarks)
 
-                        print('--------\nPrediction')
-                        # print(prediction)
-                        for n in range(0, len(prediction)):
-                            for i in range(0,len(self.classList)):
+                print('--------\nPrediction')
+                for n in range(0, len(prediction)):
+                    for i in range(0,len(self.classList)):
 
-                                value = float(prediction[n][i] * 100)
-                                print('%s - %s: %s' %(i, self.classList[i], round(value)))
+                        value = float(prediction[n][i] * 100)
+                        print('Face-%s: %s: %s' %(n, self.classList[i], round(value)))
 
                 cv2.imshow('Webcam', frame)
 

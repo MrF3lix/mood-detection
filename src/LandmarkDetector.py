@@ -51,7 +51,7 @@ class LandmarkDetector:
                 landmarks_vectorised.append(dist)
                 landmarks_vectorised.append((math.atan2(y, x)*360)/(2*math.pi))
 
-            data.append(landmarks_vectorised)
+            data.extend(landmarks_vectorised)
         if len(detections) < 1:
             data = "error"
 

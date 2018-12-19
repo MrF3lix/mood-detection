@@ -45,7 +45,7 @@ class DatasetTrainer:
                     print("failed to detect a face: %s" %(item))
                 else:
                     print("training: %s" %(item))
-                    training_data.extend(landmarks)
+                    training_data.append(landmarks)
                     training_labels.append(self.classList.index(emotion))
 
             for item in prediction:
@@ -56,7 +56,7 @@ class DatasetTrainer:
                     print("failed to detect a face: %s" %(item))
                 else:
                     print("predicting: %s" %(item))
-                    prediction_data.extend(landmarks)
+                    prediction_data.append(landmarks)
                     prediction_labels.append(self.classList.index(emotion))
 
         return training_data, training_labels, prediction_data, prediction_labels
