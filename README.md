@@ -4,7 +4,7 @@ A small application to classify the mood of one or more faces captured by a webc
 
 ## Setup
 
-To run this application localy you need to have the following things installed.
+To run this application locally you need to have the following things installed.
 
 - Python 3 > 
 - OpenCV
